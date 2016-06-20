@@ -74,13 +74,29 @@ void ShapePrinter() {
     } else if (ch == 'r') {
         int height = 0;
         int width = 0;
-        int i = 0;
-        int j = 0;
         scanf("%d %d", &height, &width);
         if (height <= 0 || width <= 0) {
             fprintf(stderr, "Invalid size: (%d, %d)\n", height, width);
         } else {
             for (i = 0; i < height; i++) {
+                for (j = 0; j < width; j++) {
+                    printf("*");
+                }
+                printf("\n");
+            }
+        }
+    } else if (ch == 'p') {
+        int height = 0;
+        int width = 0;
+        int k = 0;
+        scanf("%d %d", &height, &width);
+        if (height <= 0 || width <= 0) {
+            fprintf(stderr, "Invalid size: (%d, %d)\n", height, width);
+        } else {
+            for (i = 0; i < height; i++) {
+                for (k = 0; k < i; ++k) {
+                    printf(" ");
+                }
                 for (j = 0; j < width; j++) {
                     printf("*");
                 }
