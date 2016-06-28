@@ -1,44 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void ShapePrinter();
-
-void CircularChars();
-
-void Factors();
-
-int main() {
-
-    int userNumber = 0;
-
-    printf("1. Shape Printer\n");
-    printf("2. Circular Chars\n");
-    printf("3. Factors\n");
-    printf("4. Exit\n");
-    printf("What would you like to do? \n");
-
-    while (scanf("%d", &userNumber) != EOF) {
-
-        if (userNumber == 1) {
-            ShapePrinter();
-        } else if (userNumber == 2) {
-            CircularChars();
-        } else if (userNumber == 3) {
-            Factors();
-        } else if (userNumber == 4) {
-            break;
-        } else {
-            fprintf(stderr, "Invalid choice.\n");
-        }
-
-        printf("1. Shape Printer\n");
-        printf("2. Circular Chars\n");
-        printf("3. Factors\n");
-        printf("4. Exit\n");
-        printf("What would you like to do? \n");
-    }
-    return EXIT_SUCCESS;
-}
+/*
+ * The function will allow the user to print a shape in asterisks. The function should not print out anything except the shape.
+ * And the function can allow user print a square, a triangle and a rectangle. Also, it can print out a parallelogram.
+ * If the user enters 's', the function print out a square.
+ * The number following the 's' indicates the size of the square.
+ * If the user enters 't', the function should print out a triangle.
+ * The number following the 't' indicates the size of the triangle.
+ * If the user enters 'r', the function should print out a rectangle.
+ * The two numbers following the 'r' indicate the height and width of the rectangle, in that order.
+ * After printing the shape, the function print a new line and then print the main menu again.
+ * If the user inputs an incorrect entry (a character other than 's', 't', or 'r', a number less than or equal to zero, etc.),
+ * the function print an error message to stderr and then print the main menu.
+ */
 
 void ShapePrinter() {
     char ch;
@@ -108,6 +83,13 @@ void ShapePrinter() {
     }
 }
 
+/*
+ * For the function, the user will enter a char and the function will print the entire alphabet or number set,
+ * in continuous order until the function would return to the specified char.
+ * After doing this, the function should print out a newline and then return to the main menu.
+ * If the user types something other than a letter or number, the function print an error message to stderr and return to the main menu.
+ */
+
 void CircularChars() {
     char ch;
     int i = 0;
@@ -142,6 +124,14 @@ void CircularChars() {
     }
 }
 
+/*
+ * For the function, the user will enter two numbers and the function should print all numbers between the two numbers that have exactly two distinct factors.
+ * This search should be inclusive, meaning the two numbers the user enters should be checked, along with the numbers between them.
+ * The function should ignore those two factors.
+ * The function looking for distinct factors, meaning that if a number can be divided by one of its factors multiple times,
+ * that factor only counts once (for example, 4 can be divided by 2 twice, but 2 only counts as one factor).
+ */
+
 void Factors() {
     int a, b = 0;
     int i, j = 0;
@@ -163,4 +153,47 @@ void Factors() {
         }
     }
 }
+
+/*
+ * The function is main function. It will print main menu.
+ * When the program starts, it should display the following menu to the user.
+ * If the user selects 1, 2, or 3, the program should transition to the corresponding function above.
+ * If the user enters 4, or if there is no more input, the program should exit.
+ * If the user enters anything else, the program should print an error message to stderr and display the menu again.
+ */
+
+int main() {
+
+    int userNumber = 0;
+
+    printf("1. Shape Printer\n");
+    printf("2. Circular Chars\n");
+    printf("3. Factors\n");
+    printf("4. Exit\n");
+    printf("What would you like to do? \n");
+
+    while (scanf("%d", &userNumber) != EOF) {
+
+        if (userNumber == 1) {
+            ShapePrinter();
+        } else if (userNumber == 2) {
+            CircularChars();
+        } else if (userNumber == 3) {
+            Factors();
+        } else if (userNumber == 4) {
+            break;
+        } else {
+            fprintf(stderr, "Invalid choice.\n");
+        }
+
+        printf("1. Shape Printer\n");
+        printf("2. Circular Chars\n");
+        printf("3. Factors\n");
+        printf("4. Exit\n");
+        printf("What would you like to do? \n");
+    }
+    return EXIT_SUCCESS;
+}
+
+
 
