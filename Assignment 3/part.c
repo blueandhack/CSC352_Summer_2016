@@ -49,12 +49,15 @@ int main() {
     char key;
 
     if (scanf("%[^\n]", str) == EOF) {
-        fprintf(stderr, "Could not read input string");
+        fprintf(stderr, "Could not read input string\n");
+        return EXIT_FAILURE;
     }
     if (scanf("\n%c", &key) == EOF) {
-        fprintf(stderr, "Could not read partition character");
+        fprintf(stderr, "Could not read partition character\n");
+        return EXIT_FAILURE;
     }
 
+    // Call printParts function, then it will print out that partition a string into two parts at all instances of a given character.
     printParts(str, key);
 
     return EXIT_SUCCESS;

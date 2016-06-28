@@ -131,10 +131,13 @@ int main() {
             reverseString(str);
         } else {
             fprintf(stderr, "Invalid choice\n");
-            break;
+            return EXIT_FAILURE;
         }
     }
-    if (key != 'q') { fprintf(stderr, "Could not read user choice.\n"); }
+    if (key != 'q') {
+        fprintf(stderr, "Could not read user choice.\n");
+        return EXIT_FAILURE;
+    }
 
 
     return EXIT_SUCCESS;

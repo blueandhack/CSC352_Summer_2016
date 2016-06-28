@@ -127,34 +127,34 @@ int main() {
     while ((checkX = scanf("%i", &x)) != EOF) {
         if (checkX != 1 || (x < -2 || x == 0 || x > 20)) {
             fprintf(stderr, "Invalid obstacle position\n");
-            return EXIT_SUCCESS;
+            return EXIT_FAILURE;
         }
         if (x == -1) {
             break;
         }
         if ((checkY = scanf("%i", &y)) == EOF) {
             fprintf(stderr, "Ran out of input before obstacle completion\n");
-            return EXIT_SUCCESS;
+            return EXIT_FAILURE;
         }
         if (checkY != 1 || (y < 1 || y > 20)) {
             fprintf(stderr, "Invalid obstacle position\n");
-            return EXIT_SUCCESS;
+            return EXIT_FAILURE;
         }
         map[x - 1][y - 1] = 'x';
     }
     if (x != -1) {
         fprintf(stderr, "Ran out of input before obstacle completion\n");
-        return EXIT_SUCCESS;
+        return EXIT_FAILURE;
     }
 
     if ((checkShip = scanf("%d %d", &shipX, &shipY)) == EOF) {
         fprintf(stderr, "Couldn't read starting location\n");
-        return EXIT_SUCCESS;
+        return EXIT_FAILURE;
     }
 
     if (checkShip != 2 || shipX < 1 || shipX > 20 || shipY < 1 || shipY > 20) {
         fprintf(stderr, "Invalid starting position\n");
-        return EXIT_SUCCESS;
+        return EXIT_FAILURE;
     }
 
     shipX = shipX - 1;
