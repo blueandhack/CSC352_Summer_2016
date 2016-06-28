@@ -13,8 +13,8 @@
 #define LENGTH (100)
 
 /*
- * The function is will read newStr array and put newStr's data to str array.
- * After is will print out the string.
+ * The function is will read newStr array and put newStr to str array.
+ * After is will print the modified string.
  */
 void fillOut(char newStr[], char str[]) {
     int i;
@@ -62,8 +62,8 @@ void deleteMode(char str[]) {
 }
 
 /*
- * The function will replace a character to a new character from a string.
- * After print out the array.
+ * The function will replace a character from a string.
+ * After print the modified string.
  */
 void replaceMode(char str[]) {
     char key;
@@ -110,12 +110,19 @@ void reverseString(char str[]) {
 }
 
 /*
- * The main function will read user's input. The user should input a string and select a mode.
+ * The main function will read user's inputs. The user should input a string and select a mode.
+ * If the user enters '-', the program should go into delete mode. The user will enter another character, and the program will delete the first instance of that character in the provided string.
+ * If the user enters '~', the program should go into replace mode. The user will enter two more characters,
+ * and the program will replace the first instance of the first character in the string with the second character.
+ * If the user enters '^', the program will reverse the string.
+ * If the user enters 'q', the program will exit.
  */
 int main() {
     char str[LENGTH];
     char key;
     scanf("%[^\n]", str);
+
+    // Get input to choose a mode.
     while (scanf("\n%c", &key) != EOF) {
 
         if (key == 'q') {
@@ -134,6 +141,7 @@ int main() {
             return EXIT_FAILURE;
         }
     }
+
     if (key != 'q') {
         fprintf(stderr, "Could not read user choice.\n");
         return EXIT_FAILURE;

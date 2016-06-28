@@ -39,7 +39,7 @@ void printParts(char str[], char key) {
 }
 
 /*
- * The main function is start with the program, and the function will scan user's inputs.
+ * The main function will scan user's inputs.
  * User should input a string and a character.
  * It will receive data and put to printParts function.
  */
@@ -48,10 +48,13 @@ int main() {
     char str[LENGTH];
     char key;
 
+    // Read user's input that a string.
     if (scanf("%[^\n]", str) == EOF) {
         fprintf(stderr, "Could not read input string\n");
         return EXIT_FAILURE;
     }
+
+    // Read user's input that a character.
     if (scanf("\n%c", &key) == EOF) {
         fprintf(stderr, "Could not read partition character\n");
         return EXIT_FAILURE;

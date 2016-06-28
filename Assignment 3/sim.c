@@ -44,8 +44,9 @@ void setMap(char map[20][20]) {
  *   the program should print out ""SUNK! at x, y", followed by a new line, with x and y replaced with the coordinates at which the ship sank.
  *   If the ship sinks, any remaining input should be ignored. the program should only print out the "SUNK!" message once, regardless of how many inputs remain after the ship has sunk.
  * - If there is no more input and the ship has not sunk, the program should print out "Survived! Ending location: x, y", with x and y replaced by the final location of the ship, followed by a new line.
+ *
  */
-void goAnywhere(char map[20][20], int shipX, int shipY) {
+void goAnyWhere(char map[20][20], int shipX, int shipY) {
 
     int score = 0;
 
@@ -93,6 +94,7 @@ void goAnywhere(char map[20][20], int shipX, int shipY) {
                 fprintf(stderr, "Invalid direction\n");
             }
 
+            // If get score equals 4, then BOOM!
             if (score == 4) {
                 printf("SUNK! at %d, %d\n", shipX + 1, shipY + 1);
             }
@@ -100,6 +102,7 @@ void goAnywhere(char map[20][20], int shipX, int shipY) {
 
     }
 
+    // If get score less than 4, then you win.
     if (score < 4) {
         printf("Survived! Ending location: %d, %d\n", shipX + 1, shipY + 1);
     }
@@ -160,7 +163,8 @@ int main() {
     shipX = shipX - 1;
     shipY = shipY - 1;
 
-    goAnywhere(map, shipX, shipY);
+    // Call goAnyWhere function
+    goAnyWhere(map, shipX, shipY);
 
 
     return EXIT_SUCCESS;
