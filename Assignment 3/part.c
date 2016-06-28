@@ -8,6 +8,7 @@
  * ---
  */
 #include <stdio.h>
+#include <stdlib.h>
 
 #define LENGTH (100)
 
@@ -56,5 +57,5 @@ int main() {
 
     printParts(str, key);
 
-    return 0;
+    return EXIT_SUCCESS;
 }

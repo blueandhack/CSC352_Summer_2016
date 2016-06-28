@@ -130,11 +130,11 @@ int main() {
         else if (key == '^') {
             reverseString(str);
         } else {
-            fprintf(stderr, "Invalid choice");
+            fprintf(stderr, "Invalid choice\n");
             break;
         }
     }
-    if (key != 'q') { fprintf(stderr, "Could not read user choice."); }
+    if (key != 'q') { fprintf(stderr, "Could not read user choice.\n"); }
 
 
     return EXIT_SUCCESS;
