@@ -163,6 +163,11 @@ int main() {
     shipX = shipX - 1;
     shipY = shipY - 1;
 
+    if(map[shipX][shipY] == 'x'){
+        fprintf(stderr,"Can't start on an obstacle\n");
+        return EXIT_FAILURE;
+    }
+
     // Call goAnyWhere function
     goAnyWhere(map, shipX, shipY);
 
