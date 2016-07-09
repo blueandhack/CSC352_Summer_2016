@@ -1,3 +1,12 @@
+/*
+ * CSc 352 Summer 2016, Assignment 04
+ *
+ * Author: Yujia Lin
+ *
+ * Instructor: Lee Savoie
+ *
+ * ---
+ */
 #ifndef LLIST_H
 #define LLIST_H
 
@@ -95,8 +104,8 @@ void LList_destroy(struct LList * list);
  * For example, in a two element list where the first node contained data.x = 1, data.y = 2
  * and the second node contained data.x = 7, data.y = 8, this function would print:
  *
- * (1, 2)
- * (7, 8)
+ * 1, 2
+ * 7, 8
  *
  * Parameters:
  * list - the list to print

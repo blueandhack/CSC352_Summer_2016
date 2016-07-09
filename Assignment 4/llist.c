@@ -1,3 +1,12 @@
+/*
+ * CSc 352 Summer 2016, Assignment 04
+ *
+ * Author: Yujia Lin
+ *
+ * Instructor: Lee Savoie
+ *
+ * ---
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include "llist.h"
@@ -9,7 +18,9 @@
  */
 struct LList *LList_create() {
     struct LList *head = (struct LList *) malloc(sizeof(struct LList));
+    // If it can not create new memory unit, then return.
     if (head == NULL) {
+        fprintf(stderr, "Out of memory!");
         return NULL;
     }
     head->next = NULL;
@@ -26,7 +37,9 @@ struct LList *LList_create() {
 void LList_push_front(struct LList *list, struct LList_data data) {
     struct LList *node;
     node = (struct LList *) malloc(sizeof(struct LList));
+    // If it can not create new memory unit, then return.
     if (node == NULL) {
+        fprintf(stderr, "Out of memory!");
         return;
     }
     // printf("%d", (int)sizeof(struct LList));
