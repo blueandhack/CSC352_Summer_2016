@@ -1,0 +1,28 @@
+1
+cd
+2
+cd ../../../source/server
+3
+cat *.txt | wc -l
+4
+grep -w "6 ft 11 in" players.txt | cut -f 3
+5
+head -803 WarAndPeace.txt | grep -c CHAPTER
+6
+grep -E war WarAndPeace.txt > result
+7
+cat *.py > result
+8
+ls -al | grep -E "^[-d]"|wc -l
+9
+grep -E list logging/config.py | grep -v listener
+10
+ls -d ???* | grep -E "^[b,z]"
+11
+chmod 751 a.out
+12
+grep -i jen staff.txt | cut -f 2 -d ' ' | sort
+13
+wc -w Beowulf GettysburgAddress Hamlet War-and-Peace | grep -v total | sort
+14
+find . -type f -name '*.py' | wc -l
