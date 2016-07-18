@@ -21,20 +21,26 @@ int main() {
         return EXIT_FAILURE;
     }
 
+
     char nameOne[20];
     int scoreOne;
     int check;
+    char nameTwo[20];
+    int scoreTwo;
+
+    int count = 0;
+
     while ((check = scanf("%s %d", nameOne, &scoreOne)) != EOF) {
+        count++;
         if (check != 2) {
             fprintf(stderr, "Invalid scores entered\n");
             destroyTree(tree);
             return EXIT_FAILURE;
         }
-        char nameTwo[20];
-        int scoreTwo;
+
         int checkTwo;
-        checkTwo = scanf("%s %d", nameTwo, &scoreTwo);
-//        printf("%s %d %s %d\n", nameOne, scoreOne, nameTwo, scoreTwo);
+
+        checkTwo = scanf("\n%s %d", nameTwo, &scoreTwo);
         if (checkTwo != 2) {
             fprintf(stderr, "Invalid scores entered\n");
             destroyTree(tree);
@@ -50,7 +56,19 @@ int main() {
             destroyTree(tree);
             return EXIT_FAILURE;
         }
+
+
+//        printTree(tree);
+//        insertPlayer(tree, nameOne, 0, 0);
+//        insertPlayer(tree, nameTwo, 0, 0);
+//        printf("\n");
+//        printTree(tree);
+//        printf("%d\n", count);
+//        printf("Find One: %d ", findPlayer(tree, nameOne));
+//        printf("Find Two: %d\n", findPlayer(tree, nameTwo));
+
         if (scoreOne > scoreTwo) {
+            //printf("%s %d %s %d\n", nameOne, scoreOne, nameTwo, scoreTwo);
             if (findPlayer(tree, nameOne) == 1) {
                 updatePlayer(tree, nameOne, 1, 0);
             } else {
@@ -62,6 +80,7 @@ int main() {
                 insertPlayer(tree, nameTwo, 0, 1);
             }
         } else {
+            //printf("%s %d %s %d\n", nameOne, scoreOne, nameTwo, scoreTwo);
             if (findPlayer(tree, nameOne) == 1) {
                 updatePlayer(tree, nameOne, 0, 1);
             } else {
@@ -75,11 +94,12 @@ int main() {
         }
 
     }
-    if (check != 2) {
-        fprintf(stderr, "Invalid scores entered\n");
-        destroyTree(tree);
-        return EXIT_FAILURE;
+
+
+    if (count == 0 && check == -1) {
+        return EXIT_SUCCESS;
     }
+
 
     printTree(tree);
 

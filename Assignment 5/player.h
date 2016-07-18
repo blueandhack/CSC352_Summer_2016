@@ -24,11 +24,11 @@ struct Node {
 
 struct Node *createTree();
 
-int insertPlayer(struct Node *tree, char *name, int win, int los);
+int insertPlayer(struct Node *tree, char *name, int isWin, int isLos);
 
 int findPlayer(struct Node *tree, char *name);
 
-int updatePlayer(struct Node *tree, char *name, int win, int los);
+int updatePlayer(struct Node *tree, char *name, int isWin, int isLos);
 
 void destroyTree(struct Node *tree);
 

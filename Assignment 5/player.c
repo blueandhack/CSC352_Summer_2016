@@ -14,8 +14,6 @@
 
 struct Node *createTree() {
     struct Node *tree = (struct Node *) malloc(sizeof(struct Node));
-    //printf("%d\n", sizeof(struct Node));
-    //printf("%d\n", sizeof(struct Player));
     if (tree == NULL) {
         fprintf(stderr, "Out of memory!");
         return NULL;
@@ -26,12 +24,16 @@ struct Node *createTree() {
     return tree;
 }
 
-int insertPlayer(struct Node *tree, char *name, int win, int los) {
-    //printf("%d\n", tree->data.name == NULL);
+int insertPlayer(struct Node *tree, char *name, int isWin, int isLos) {
+
     if (tree->data.name == NULL) {
-        tree->data.name = name;
-        tree->data.losses = los;
-        tree->data.wins = win;
+        tree->data.name = strdup(name);
+        if (tree->data.name == NULL) {
+            fprintf(stderr, "Out of memory!");
+            return 0;
+        }
+        tree->data.losses = isLos;
+        tree->data.wins = isWin;
         return 1;
     }
     struct Node *node = (struct Node *) malloc(sizeof(struct Node));
@@ -39,33 +41,35 @@ int insertPlayer(struct Node *tree, char *name, int win, int los) {
         fprintf(stderr, "Out of memory!");
         return 0;
     }
-    node->data.name = name;
-    node->data.losses = los;
-    node->data.wins = win;
+    node->data.name = strdup(name);
+    if (node->data.name == NULL) {
+        free(node);
+        fprintf(stderr, "Out of memory!");
+        return 0;
+    }
+    node->data.losses = isLos;
+    node->data.wins = isWin;
     node->right = NULL;
     node->left = NULL;
-    //printf("%s",tree->data.name);
+
     struct Node *p = tree;
-    struct Node *q = tree;
-    int nav = 0;
-    while (p != NULL) {
-        //printf("%d\n", strcmp(p->data.name, name));
+
+    while (1) {
+
         if (strcmp(p->data.name, name) < 0) {
-            q = p;
-            nav = 0;
+            if (p->right == NULL) {
+                p->right = node;
+                return 1;
+            }
             p = p->right;
         } else {
-            q = p;
-            nav = 1;
+            if (p->left == NULL) {
+                p->left = node;
+                return 1;
+            }
             p = p->left;
         }
     }
-    if (nav == 0) {
-        q->right = node;
-    } else {
-        q->left = node;
-    }
-    return 1;
 }
 
 int findPlayer(struct Node *tree, char *name) {
@@ -88,7 +92,7 @@ int findPlayer(struct Node *tree, char *name) {
     return 0;
 }
 
-int updatePlayer(struct Node *tree, char *name, int win, int los) {
+int updatePlayer(struct Node *tree, char *name, int isWin, int isLos) {
 
     if (tree->data.name == NULL) {
         return 0;
@@ -104,10 +108,10 @@ int updatePlayer(struct Node *tree, char *name, int win, int los) {
             p = p->left;
         } else {
 
-            if (win == 1) {
+            if (isWin == 1) {
                 p->data.wins = p->data.wins + 1;
             }
-            if (los == 1) {
+            if (isLos == 1) {
                 p->data.losses = p->data.losses + 1;
             }
 
@@ -121,6 +125,7 @@ void destroyTree(struct Node *tree) {
     if (tree != 0) {
         destroyTree(tree->left);
         destroyTree(tree->right);
+        free(tree->data.name);
         free(tree);
     }
 }
@@ -131,6 +136,6 @@ void printTree(struct Node *tree) {
         return;
     }
     printTree(tree->left);
-    printf("%s %d %d\n", tree->data.name, tree->data.wins, tree->data.losses);
+    printf("%s, %d, %d\n", tree->data.name, tree->data.wins, tree->data.losses);
     printTree(tree->right);
 }
