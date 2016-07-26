@@ -20,30 +20,28 @@ struct Player {
     int losses;
 };
 
-struct Node {
+struct TreeNode {
     struct Player data;
-    struct Node *left;
-    struct Node *right;
+    struct TreeNode *left;
+    struct TreeNode *right;
 };
 
 /*
  * This function creates an empty binary search tree. It takes no parameters and returns
- * a pointer to a newly allocated struct Node.
+ * a pointer to a newly allocated struct TreeNode.
  */
-struct Node *createTree();
+struct TreeNode *createTree();
 
 /*
  * This function adds the provided element to the binary search tree.
  *
  * Parameters:
  * tree - the BST to add the element to
- * name - the element of name to add to the BST
- * isWin - the element of isWin to add to the BST
- * isLos - the element of isLos to add to the BST
+ * player - the element to add to the BST
  *
  * Returns: 1 if insert successful, and 0 if it was not.
  */
-int insertPlayer(struct Node *tree, char *name, int isWin, int isLos);
+int insertPlayer(struct TreeNode *tree, struct Player *player);
 
 /*
  * This function finds an element in the binary search tree. It searches for the element
@@ -55,7 +53,7 @@ int insertPlayer(struct Node *tree, char *name, int isWin, int isLos);
  *
  * Returns: 1 if the element was found in the BST, and 0 if it was not.
  */
-int findPlayer(struct Node *tree, char *name);
+int findPlayer(struct TreeNode *tree, char *name);
 
 /*
  * Updates an element in the BST in place.  Nothing is added or removed from the BST.
@@ -65,13 +63,11 @@ int findPlayer(struct Node *tree, char *name);
  *
  * Parameters:
  * tree - the BST to update
- * name - the name to search for.
- * isWin - the element of isWin to update for.
- * isLos - the element of isLos to update for.
+ * player - the player to search for.
  *
  * Returns: 1 if the BST was updated, 0 if the BST was not updated.
  */
-int updatePlayer(struct Node *tree, char *name, int isWin, int isLos);
+int updatePlayer(struct TreeNode *tree, struct Player *player);
 
 /*
  * Destroys a BST.  Every node in the BST will be deallocated, along with the BST itself.
@@ -79,7 +75,7 @@ int updatePlayer(struct Node *tree, char *name, int isWin, int isLos);
  * Parameters:
  * tree - the BST to destroy
  */
-void destroyTree(struct Node *tree);
+void destroyTree(struct TreeNode *tree);
 
 /*
  * Prints out the data stored in the BST.
@@ -91,6 +87,6 @@ void destroyTree(struct Node *tree);
  * Parameters:
  * tree - the BST to print
  */
-void printTree(struct Node *tree);
+void printTree(struct TreeNode *tree);
 
 #endif //PLAYER_H

@@ -13,13 +13,20 @@
 #include "player.h"
 
 /*
- * This function creates an empty binary search tree. It takes no parameters and returns
- * a pointer to a newly allocated struct Node.
+ * The function will print out "Out of memory."
  */
-struct Node *createTree() {
-    struct Node *tree = (struct Node *) malloc(sizeof(struct Node));
+void outOfMemory() {
+    fprintf(stderr, "Out of memory!");
+}
+
+/*
+ * The function creates an empty binary search tree. It takes no parameters and returns
+ * a pointer to a newly allocated struct TreeNode.
+ */
+struct TreeNode *createTree() {
+    struct TreeNode *tree = (struct TreeNode *) malloc(sizeof(struct TreeNode));
     if (tree == NULL) {
-        fprintf(stderr, "Out of memory!");
+        outOfMemory();
         return NULL;
     }
     tree->data.name = NULL;
@@ -29,66 +36,68 @@ struct Node *createTree() {
 }
 
 /*
- * This function adds the provided element to the binary search tree.
+ * The function adds the provided element to the binary search tree.
  *
  * Parameters:
  * tree - the BST to add the element to
- * name - the element of name to add to the BST
- * isWin - the element of isWin to add to the BST
- * isLos - the element of isLos to add to the BST
+ * player - the element to add to the BST
  *
  * Returns: 1 if insert successful, and 0 if it was not.
  */
-int insertPlayer(struct Node *tree, char *name, int isWin, int isLos) {
+int insertPlayer(struct TreeNode *tree, struct Player *player) {
 
     if (tree->data.name == NULL) {
-        tree->data.name = strdup(name);
+        tree->data.name = strdup(player->name);
         if (tree->data.name == NULL) {
-            fprintf(stderr, "Out of memory!");
+            outOfMemory();
             return 0;
         }
-        tree->data.losses = isLos;
-        tree->data.wins = isWin;
+        tree->data.losses = player->losses;
+        tree->data.wins = player->wins;
         return 1;
     }
-    struct Node *node = (struct Node *) malloc(sizeof(struct Node));
-    if (node == NULL) {
-        fprintf(stderr, "Out of memory!");
-        return 0;
-    }
-    node->data.name = strdup(name);
-    if (node->data.name == NULL) {
-        free(node);
-        fprintf(stderr, "Out of memory!");
-        return 0;
-    }
-    node->data.losses = isLos;
-    node->data.wins = isWin;
-    node->right = NULL;
-    node->left = NULL;
 
-    struct Node *p = tree;
+    struct TreeNode *newNode = (struct TreeNode *) malloc(sizeof(struct TreeNode));
+    if (newNode == NULL) {
+        outOfMemory();
+        return 0;
+    }
+
+    newNode->data.losses = player->losses;
+    newNode->data.wins = player->wins;
+    newNode->right = NULL;
+    newNode->left = NULL;
+    newNode->data.name = strdup(player->name);
+
+    if (newNode->data.name == NULL) {
+        free(newNode);
+        outOfMemory();
+        return 0;
+    }
+
+
+    struct TreeNode *pointer = tree;
 
     while (1) {
 
-        if (strcmp(p->data.name, name) < 0) {
-            if (p->right == NULL) {
-                p->right = node;
+        if (strcmp(pointer->data.name, player->name) < 0) {
+            if (pointer->right == NULL) {
+                pointer->right = newNode;
                 return 1;
             }
-            p = p->right;
+            pointer = pointer->right;
         } else {
-            if (p->left == NULL) {
-                p->left = node;
+            if (pointer->left == NULL) {
+                pointer->left = newNode;
                 return 1;
             }
-            p = p->left;
+            pointer = pointer->left;
         }
     }
 }
 
 /*
- * This function finds an element in the binary search tree. It searches for the element
+ * The function finds an element in the binary search tree. It searches for the element
  * whose data.name value matches the name value passed to the function.
  *
  * Parameters:
@@ -97,25 +106,25 @@ int insertPlayer(struct Node *tree, char *name, int isWin, int isLos) {
  *
  * Returns: 1 if the element was found in the BST, and 0 if it was not.
  */
-int findPlayer(struct Node *tree, char *name) {
+
+int findPlayer(struct TreeNode *tree, char *name) {
 
     if (tree->data.name == NULL) {
         return 0;
     }
-    struct Node *p = tree;
-    while (p != NULL) {
-        if (strcmp(p->data.name, name) < 0) {
-
-            p = p->right;
-        } else if (strcmp(p->data.name, name) > 0) {
-
-            p = p->left;
-        } else {
+    struct TreeNode *pointer = tree;
+    while (pointer != NULL) {
+        if (strcmp(pointer->data.name, name) == 0) {
             return 1;
+        } else if (strcmp(pointer->data.name, name) < 0) {
+            pointer = pointer->right;
+        } else {
+            pointer = pointer->left;
         }
     }
     return 0;
 }
+
 
 /*
  * Updates an element in the BST in place. Nothing is added or removed from the BST.
@@ -125,48 +134,44 @@ int findPlayer(struct Node *tree, char *name) {
  *
  * Parameters:
  * tree - the BST to update
- * name - the name to search for.
- * isWin - the element of isWin to update for.
- * isLos - the element of isLos to update for.
+ * player - the player to search for.
  *
  * Returns: 1 if the BST was updated, 0 if the BST was not updated.
  */
-int updatePlayer(struct Node *tree, char *name, int isWin, int isLos) {
+int updatePlayer(struct TreeNode *tree, struct Player *player) {
 
     if (tree->data.name == NULL) {
         return 0;
     }
 
-    struct Node *p = tree;
-    while (p != NULL) {
-        if (strcmp(p->data.name, name) < 0) {
+    struct TreeNode *pointer = tree;
+    while (pointer != NULL) {
+        if (strcmp(pointer->data.name, player->name) == 0) {
+            if (player->wins == 1) {
+                pointer->data.wins = pointer->data.wins + 1;
+            }
+            if (player->losses == 1) {
+                pointer->data.losses = pointer->data.losses + 1;
+            }
+            return 1;
+        } else if (strcmp(pointer->data.name, player->name) < 0) {
 
-            p = p->right;
-        } else if (strcmp(p->data.name, name) > 0) {
-
-            p = p->left;
+            pointer = pointer->right;
         } else {
 
-            if (isWin == 1) {
-                p->data.wins = p->data.wins + 1;
-            }
-            if (isLos == 1) {
-                p->data.losses = p->data.losses + 1;
-            }
-
-            return 1;
+            pointer = pointer->left;
         }
     }
     return 0;
 }
 
 /*
- * Destroys a BST. Every node in the BST will be deallocated, along with the BST itself.
+ * The function destroys a BST. Every node in the BST will be deallocated, along with the BST itself.
  *
  * Parameters:
  * tree - the BST to destroy
  */
-void destroyTree(struct Node *tree) {
+void destroyTree(struct TreeNode *tree) {
     if (tree != 0) {
         destroyTree(tree->left);
         destroyTree(tree->right);
@@ -176,7 +181,7 @@ void destroyTree(struct Node *tree) {
 }
 
 /*
- * Prints out the data stored in the BST.
+ * The function prints out the data stored in the BST.
  * The function would print:
  *
  * a, 0, 1
@@ -185,7 +190,7 @@ void destroyTree(struct Node *tree) {
  * Parameters:
  * tree - the BST to print
  */
-void printTree(struct Node *tree) {
+void printTree(struct TreeNode *tree) {
     if (tree == NULL) {
         return;
     }
