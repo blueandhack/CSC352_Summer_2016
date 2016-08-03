@@ -2,11 +2,11 @@
 # NAME : Yujia Lin
 # The function will create PDF from PPT
 createPDF(){
-	FILES=`ls .`
+	FLAG="NO"
+	DIRFILES=`ls .`
 	PDF=".pdf"
-	FLAG=0
 	# Get all filename
-	for filename in ${FILES} ; do
+	for filename in ${DIRFILES} ; do
 		# Judg filename includes ppt
 		if [ "${filename##*.}" = "ppt" ] ; then
 			if [ -f ${filename%.*}${PDF} ] ; then
@@ -20,20 +20,22 @@ createPDF(){
 				echo "--------------------------------------------------"
 				# Judg which file is new one
 				if [ ${pptdate} -gt ${pdfdate}  ] ; then
+					FLAG="YES"
+					# Create a new pdf
 					echo "| CREATE A NEW PDF : ${pdffilename} |"
 					ppttopdf ${filename}
-					FLAG=1
 				fi
 			else
+				FLAG="YES"
+				# Create a new pdf
 				echo "| CREATE A NEW PDF : ${filename%.*}${PDF} |"
 				ppttopdf ${filename}
-				FLAG=1
 			fi
 		fi
 	done
 	# Archive all PDF and PPT files to lectures.tar.gz
 	# Then copy that to www directory
-	if [ ${FLAG} == 1 ] ; then
+	if [ ${FLAG} = "YES" ] ; then
 		echo "--------------------------------------------------"
 		echo "CREATE A FILE lectures.tar.gz"
 		echo "--------------------------------------------------"
